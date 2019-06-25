@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>uzaylogo.jpeg</file>
+    </qresource>
+</RCC>
