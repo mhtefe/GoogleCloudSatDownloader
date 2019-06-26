@@ -55,20 +55,20 @@ void GCSatDownloader::setupUiBandCombo()
 	ui->comboBox_Bands_LS8->addItem("MTL");
 
 	ui->comboBox_Bands_S2->addItem("All");
-	ui->comboBox_Bands_S2->addItem("Band 1  ");
-	ui->comboBox_Bands_S2->addItem("Band 2  ");
-	ui->comboBox_Bands_S2->addItem("Band 3  ");
-	ui->comboBox_Bands_S2->addItem("Band 4  ");
-	ui->comboBox_Bands_S2->addItem("Band 5  ");
-	ui->comboBox_Bands_S2->addItem("Band 6  ");
-	ui->comboBox_Bands_S2->addItem("Band 7  ");
-	ui->comboBox_Bands_S2->addItem("Band 8  ");
-	ui->comboBox_Bands_S2->addItem("Band 9  ");
-	ui->comboBox_Bands_S2->addItem("Band 10  ");
-	ui->comboBox_Bands_S2->addItem("Band 11  ");
-	ui->comboBox_Bands_S2->addItem("Band 12  ");
-	ui->comboBox_Bands_S2->addItem("Band 8A  ");
-	ui->comboBox_Bands_S2->addItem("Band TCI ");
+	ui->comboBox_Bands_S2->addItem("Band 1  - Coastal aerosol");
+	ui->comboBox_Bands_S2->addItem("Band 2  - Blue");
+	ui->comboBox_Bands_S2->addItem("Band 3  - Green");
+	ui->comboBox_Bands_S2->addItem("Band 4  - Red");
+	ui->comboBox_Bands_S2->addItem("Band 5  - VRE 1");
+	ui->comboBox_Bands_S2->addItem("Band 6  - VRE 2");
+	ui->comboBox_Bands_S2->addItem("Band 7  - VRE 3");
+	ui->comboBox_Bands_S2->addItem("Band 8  - NIR");
+	ui->comboBox_Bands_S2->addItem("Band 9  - Water vapour");
+	ui->comboBox_Bands_S2->addItem("Band 10  - SWIR - Cirrus");
+	ui->comboBox_Bands_S2->addItem("Band 11  - SWIR");
+	ui->comboBox_Bands_S2->addItem("Band 12  - SWIR");
+	ui->comboBox_Bands_S2->addItem("Band 8A  - Narrow NIR");
+	ui->comboBox_Bands_S2->addItem("Band TCI -");
 }
 
 void GCSatDownloader::setupUiComponents()
@@ -78,17 +78,17 @@ void GCSatDownloader::setupUiComponents()
 	setAcceptDrops(true);
 
 	QDate tdy = QDate::currentDate();
-	ui->dateEdit_first_LS8->setDate(QDate(2013, 1, 1));
+	
+	ui->dateEdit_first_LS8->setDate(QDate(2013, 1, 1)); 
 	ui->dateEdit_last_LS8->setDate(tdy);
 	ui->LineEdit_Cloud_LS8->setText(QString("10"));
-	ui->dateEdit_first_S2->setDate(QDate(2015, 6, 23));
+	ui->dateEdit_first_S2->setDate(QDate(2015, 6, 23)); 
 	ui->dateEdit_last_S2->setDate(tdy);
 	ui->LineEdit_Cloud_S2->setText(QString("10"));
 
-
 	ui->tableWidget_datas_LS8->setSelectionBehavior(QAbstractItemView::SelectRows);
 	QStringList labels;
-	labels << tr("Scene ID") << tr("Date Acquired") << tr("Cloud");
+	labels << tr("Scene ID") << tr("Date Acquired") << tr("Cloud"); 
 	ui->tableWidget_datas_LS8->setHorizontalHeaderLabels(labels);
 	ui->tableWidget_datas_LS8->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 	ui->tableWidget_datas_LS8->setShowGrid(false);
@@ -119,6 +119,7 @@ void GCSatDownloader::setupUiComponents()
 
 void GCSatDownloader::setupUiPaths()
 {
+
 	m_workingDirectory = QString::fromStdString(getWorkingDIR());
 	m_scene_dir = m_workingDirectory + QString("\\") + Settings::getGeneral_SceneFolderName();
 	if (!QDir(m_scene_dir).exists())
@@ -131,7 +132,6 @@ void GCSatDownloader::setupUiPaths()
 	m_LS8_ls8Index = QString("https://storage.googleapis.com/gcp-public-data-landsat/index.csv.gz");
 	if (QFileInfo(m_LS8_scene_extractFile).exists())
 		ui->lineEdit_Index_LS8->insert(m_LS8_scene_extractFile);
-
 
 	m_S2_scene_rawFile = m_scene_dir + QString("\\") + QString("S2_index.csv.gz");
 	m_S2_scene_extractFile = m_scene_dir + QString("\\") + QString("S2_index.csv");
