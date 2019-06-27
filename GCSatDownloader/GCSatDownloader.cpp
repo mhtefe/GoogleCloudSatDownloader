@@ -181,6 +181,19 @@ void GCSatDownloader::setupUiSearcherDownloader()
 
 void GCSatDownloader::on_pushButton_search_LS8_clicked()
 {
+
+	if (!ui->LineEdit_Lat_LS8->isModified()) {
+		ui->lineEdit_Info_LS8->setStyleSheet("background-color: orange");
+		ui->lineEdit_Info_LS8->setText(QString("Please enter the latitude."));
+		return;
+	}
+
+	if (!ui->LineEdit_Lon_LS8->isModified()) {
+		ui->lineEdit_Info_LS8->setStyleSheet("background-color: orange");
+		ui->lineEdit_Info_LS8->setText(QString("Please enter the longitude."));
+		return;
+	}
+
 	if (!QFileInfo(m_LS8_scene_extractFile).exists())
 	{
 		ui->lineEdit_Info_LS8->setStyleSheet("background-color: orange");
@@ -222,6 +235,19 @@ void GCSatDownloader::on_pushButton_search_LS8_clicked()
 
 void GCSatDownloader::on_pushButton_search_S2_clicked()
 {
+
+	if (!ui->LineEdit_Lat_S2->isModified()) {
+		ui->lineEdit_Info_S2->setStyleSheet("background-color: orange");
+		ui->lineEdit_Info_S2->setText(QString("Please enter the latitude."));
+		return;
+	}
+
+	if (!ui->LineEdit_Lon_S2->isModified()) {
+		ui->lineEdit_Info_S2->setStyleSheet("background-color: orange");
+		ui->lineEdit_Info_S2->setText(QString("Please enter the longitude."));
+		return;
+	}
+
 	if (!QFileInfo(m_S2_scene_extractFile).exists())
 	{
 		ui->lineEdit_Info_S2->setStyleSheet("background-color: orange");
@@ -513,7 +539,9 @@ void GCSatDownloader::afterStatusbarMessage(QString str)
 }
 
 void GCSatDownloader::on_pushButton_ShowIndex_LS8_clicked()
-{
+{	
+	displayFolder(0);
+	/*
 	if (QFileInfo().exists(m_LS8_scene_extractFile))
 	{
 		QDesktopServices::openUrl(QUrl::fromLocalFile(m_scene_dir));
@@ -526,11 +554,74 @@ void GCSatDownloader::on_pushButton_ShowIndex_LS8_clicked()
 		return;
 	}
 
-	ui->lineEdit_Index_LS8->setText("NaN");
+	ui->lineEdit_Index_LS8->setText("NaN");*/
+}
+
+void GCSatDownloader::on_pushButton_ShowIndex_S2_clicked()
+{
+	displayFolder(1);
+	/**
+	if (QFileInfo().exists(m_S2_scene_extractFile))
+	{
+		QDesktopServices::openUrl(QUrl::fromLocalFile(m_scene_dir));
+		return;
+	}
+
+	if (QFileInfo().exists(m_S2_scene_rawFile))
+	{
+		QDesktopServices::openUrl(QUrl::fromLocalFile(m_S2_scene_rawFile));
+		return;
+	}
+
+	ui->lineEdit_Index_S2->setText("NaN");*/
+}
+
+void GCSatDownloader::displayFolder(int _ind)
+{
+	//Landsat8 
+	if (_ind == 0) {
+		if (QFileInfo().exists(m_LS8_scene_extractFile))
+		{
+			QDesktopServices::openUrl(QUrl::fromLocalFile(m_scene_dir));
+			return;
+		}
+
+		if (QFileInfo().exists(m_LS8_scene_rawFile))
+		{
+			QDesktopServices::openUrl(QUrl::fromLocalFile(m_LS8_scene_rawFile));
+			return;
+		}
+
+		ui->lineEdit_Index_LS8->setText("NaN");
+	}
+
+	//Sentinel 2
+	else {
+
+		if (QFileInfo().exists(m_S2_scene_extractFile))
+		{
+			QDesktopServices::openUrl(QUrl::fromLocalFile(m_scene_dir));
+			return;
+		}
+
+		if (QFileInfo().exists(m_S2_scene_rawFile))
+		{
+			QDesktopServices::openUrl(QUrl::fromLocalFile(m_S2_scene_rawFile));
+			return;
+		}
+
+		ui->lineEdit_Index_S2->setText("NaN");
+	}
 }
 
 void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 {
+	if (m_LS8_Searcher->m_vlb.size() == 0 || m_datas_Index_LS8 < 0 || m_datas_Index_LS8 >= m_LS8_Searcher->m_vlb.size()) 
+	{
+		ui->lineEdit_Info_LS8->setStyleSheet("background-color: red");
+		ui->lineEdit_Info_LS8->setText(QString("Serach result is empty or invalid index"));
+		return;
+	}
 	// get selected band 
 	int bandIndex = ui->comboBox_Bands_LS8->currentIndex();
 	if (bandIndex == 0)
@@ -568,7 +659,14 @@ void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 }
 
 void GCSatDownloader::on_pushButton_DownloadImage_S2_clicked()
-{
+{	
+	if (m_S2_Searcher->m_vlb.size() == 0 || m_datas_Index_S2 < 0 || m_datas_Index_S2 >= m_S2_Searcher->m_vlb.size())
+	{
+		ui->lineEdit_Info_S2->setStyleSheet("background-color: red");
+		ui->lineEdit_Info_S2->setText(QString("Serach result is empty or invalid index"));
+		return;
+	}
+
 	// get selected band 
 	int bandIndex = ui->comboBox_Bands_S2->currentIndex();
 	if (bandIndex == 0)
@@ -643,6 +741,7 @@ QString GCSatDownloader::getImageFolderPath_LS8(int _bandIndex)
 
 QString GCSatDownloader::getDownloadLink_LS8(int _bandIndex)
 {
+	
 	GCP_LANDSAT8_LABEL scn = m_LS8_Searcher->m_vlb[m_datas_Index_LS8];
 
 	QString baselink = "https://storage.googleapis.com/gcp-public-data-landsat/";

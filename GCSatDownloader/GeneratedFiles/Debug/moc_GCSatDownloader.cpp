@@ -89,8 +89,8 @@ int CustomProgressBarTableWidgetItem::qt_metacall(QMetaObject::Call _c, int _id,
     return _id;
 }
 struct qt_meta_stringdata_GCSatDownloader_t {
-    QByteArrayData data[23];
-    char stringdata0[503];
+    QByteArrayData data[26];
+    char stringdata0[557];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -111,17 +111,20 @@ QT_MOC_LITERAL(8, 165, 29), // "on_pushButton_stop_S2_clicked"
 QT_MOC_LITERAL(9, 195, 39), // "on_pushButton_DownloadIndex_L..."
 QT_MOC_LITERAL(10, 235, 38), // "on_pushButton_DownloadIndex_S..."
 QT_MOC_LITERAL(11, 274, 35), // "on_pushButton_ShowIndex_LS8_c..."
-QT_MOC_LITERAL(12, 310, 39), // "on_pushButton_DownloadImage_L..."
-QT_MOC_LITERAL(13, 350, 38), // "on_pushButton_DownloadImage_S..."
-QT_MOC_LITERAL(14, 389, 19), // "afterSearchFinished"
-QT_MOC_LITERAL(15, 409, 21), // "afterStatusbarMessage"
-QT_MOC_LITERAL(16, 431, 19), // "updateCurrentStatus"
-QT_MOC_LITERAL(17, 451, 1), // "i"
-QT_MOC_LITERAL(18, 453, 1), // "j"
-QT_MOC_LITERAL(19, 455, 18), // "showFileOfItem_LS8"
-QT_MOC_LITERAL(20, 474, 3), // "row"
-QT_MOC_LITERAL(21, 478, 6), // "column"
-QT_MOC_LITERAL(22, 485, 17) // "showFileOfItem_S2"
+QT_MOC_LITERAL(12, 310, 34), // "on_pushButton_ShowIndex_S2_cl..."
+QT_MOC_LITERAL(13, 345, 13), // "displayFolder"
+QT_MOC_LITERAL(14, 359, 4), // "_ind"
+QT_MOC_LITERAL(15, 364, 39), // "on_pushButton_DownloadImage_L..."
+QT_MOC_LITERAL(16, 404, 38), // "on_pushButton_DownloadImage_S..."
+QT_MOC_LITERAL(17, 443, 19), // "afterSearchFinished"
+QT_MOC_LITERAL(18, 463, 21), // "afterStatusbarMessage"
+QT_MOC_LITERAL(19, 485, 19), // "updateCurrentStatus"
+QT_MOC_LITERAL(20, 505, 1), // "i"
+QT_MOC_LITERAL(21, 507, 1), // "j"
+QT_MOC_LITERAL(22, 509, 18), // "showFileOfItem_LS8"
+QT_MOC_LITERAL(23, 528, 3), // "row"
+QT_MOC_LITERAL(24, 532, 6), // "column"
+QT_MOC_LITERAL(25, 539, 17) // "showFileOfItem_S2"
 
     },
     "GCSatDownloader\0afterDownloadFinished\0"
@@ -133,6 +136,8 @@ QT_MOC_LITERAL(22, 485, 17) // "showFileOfItem_S2"
     "on_pushButton_DownloadIndex_LS8_clicked\0"
     "on_pushButton_DownloadIndex_S2_clicked\0"
     "on_pushButton_ShowIndex_LS8_clicked\0"
+    "on_pushButton_ShowIndex_S2_clicked\0"
+    "displayFolder\0_ind\0"
     "on_pushButton_DownloadImage_LS8_clicked\0"
     "on_pushButton_DownloadImage_S2_clicked\0"
     "afterSearchFinished\0afterStatusbarMessage\0"
@@ -147,7 +152,7 @@ static const uint qt_meta_data_GCSatDownloader[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      16,   14, // methods
+      18,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -155,22 +160,24 @@ static const uint qt_meta_data_GCSatDownloader[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   94,    2, 0x0a /* Public */,
-       4,    0,   97,    2, 0x0a /* Public */,
-       5,    0,   98,    2, 0x08 /* Private */,
-       6,    0,   99,    2, 0x08 /* Private */,
-       7,    0,  100,    2, 0x08 /* Private */,
-       8,    0,  101,    2, 0x08 /* Private */,
-       9,    0,  102,    2, 0x08 /* Private */,
-      10,    0,  103,    2, 0x08 /* Private */,
-      11,    0,  104,    2, 0x08 /* Private */,
-      12,    0,  105,    2, 0x08 /* Private */,
-      13,    0,  106,    2, 0x08 /* Private */,
-      14,    0,  107,    2, 0x08 /* Private */,
-      15,    1,  108,    2, 0x08 /* Private */,
-      16,    2,  111,    2, 0x08 /* Private */,
-      19,    2,  116,    2, 0x08 /* Private */,
-      22,    2,  121,    2, 0x08 /* Private */,
+       1,    1,  104,    2, 0x0a /* Public */,
+       4,    0,  107,    2, 0x0a /* Public */,
+       5,    0,  108,    2, 0x08 /* Private */,
+       6,    0,  109,    2, 0x08 /* Private */,
+       7,    0,  110,    2, 0x08 /* Private */,
+       8,    0,  111,    2, 0x08 /* Private */,
+       9,    0,  112,    2, 0x08 /* Private */,
+      10,    0,  113,    2, 0x08 /* Private */,
+      11,    0,  114,    2, 0x08 /* Private */,
+      12,    0,  115,    2, 0x08 /* Private */,
+      13,    1,  116,    2, 0x08 /* Private */,
+      15,    0,  119,    2, 0x08 /* Private */,
+      16,    0,  120,    2, 0x08 /* Private */,
+      17,    0,  121,    2, 0x08 /* Private */,
+      18,    1,  122,    2, 0x08 /* Private */,
+      19,    2,  125,    2, 0x08 /* Private */,
+      22,    2,  130,    2, 0x08 /* Private */,
+      25,    2,  135,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -183,12 +190,14 @@ static const uint qt_meta_data_GCSatDownloader[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   14,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,    3,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   17,   18,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,   20,   21,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   20,   21,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   23,   24,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   23,   24,
 
        0        // eod
 };
@@ -208,13 +217,15 @@ void GCSatDownloader::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 6: _t->on_pushButton_DownloadIndex_LS8_clicked(); break;
         case 7: _t->on_pushButton_DownloadIndex_S2_clicked(); break;
         case 8: _t->on_pushButton_ShowIndex_LS8_clicked(); break;
-        case 9: _t->on_pushButton_DownloadImage_LS8_clicked(); break;
-        case 10: _t->on_pushButton_DownloadImage_S2_clicked(); break;
-        case 11: _t->afterSearchFinished(); break;
-        case 12: _t->afterStatusbarMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 13: _t->updateCurrentStatus((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 14: _t->showFileOfItem_LS8((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 15: _t->showFileOfItem_S2((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 9: _t->on_pushButton_ShowIndex_S2_clicked(); break;
+        case 10: _t->displayFolder((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->on_pushButton_DownloadImage_LS8_clicked(); break;
+        case 12: _t->on_pushButton_DownloadImage_S2_clicked(); break;
+        case 13: _t->afterSearchFinished(); break;
+        case 14: _t->afterStatusbarMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 15: _t->updateCurrentStatus((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 16: _t->showFileOfItem_LS8((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 17: _t->showFileOfItem_S2((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -245,13 +256,13 @@ int GCSatDownloader::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 16)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 16)
+        if (_id < 18)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 16;
+        _id -= 18;
     }
     return _id;
 }
