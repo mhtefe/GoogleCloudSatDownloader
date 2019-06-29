@@ -16,6 +16,7 @@
 #include <QProgressBar>
 #include <QTableWidgetItem>
 #include <qfiledialog.h>
+#include <qdrag.h>
 
 #include "Settings.h"
 #include "SearcherLS8.h"
@@ -67,6 +68,9 @@ class GCSatDownloader : public QMainWindow
 public:
     explicit GCSatDownloader(QWidget *parent = 0);
     ~GCSatDownloader();
+protected:
+	void dragEnterEvent(QDragEnterEvent *event) override;
+	void dropEvent(QDropEvent *event) override;
 private:
     Ui::GcSatDownloader *ui;
 

@@ -9,6 +9,7 @@
 
 #include "GCSatDownloader.h"
 #include "ui_gcsatdownloader.h"
+#include <qmimedata.h>
 
 using namespace std;
 
@@ -16,7 +17,7 @@ GCSatDownloader::GCSatDownloader(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GcSatDownloader)
 {
-	setupUiComponents();
+	setupUiComponents();	
 
 	////////////////////////////////////////////////////////////////////////// ui paths
 	setupUiPaths();
@@ -898,4 +899,32 @@ string GCSatDownloader::getWorkingDIR(void)
 		directory = ss.substr(0, last_slash_idx);
 	}
 	return directory;
+}
+
+void GCSatDownloader::dropEvent(QDropEvent *event)
+{
+	const QMimeData *mimeData = event->mimeData();
+	event->acceptProposedAction();
+
+	if (mimeData->hasUrls()) {
+		QList<QUrl> urlList = mimeData->urls();
+		QString text;
+		for (int i = 0; i < urlList.size() && i < 32; ++i)
+			text += urlList.at(i).path() + QLatin1Char('\n');
+		ui->lineEdit_Info_LS8->setStyleSheet("background-color: green");
+		ui->lineEdit_Info_S2->setStyleSheet("background-color: green");
+		ui->lineEdit_Info_LS8->setText(text);
+		ui->lineEdit_Info_S2->setText(text);
+		return;
+	}
+	ui->lineEdit_Info_LS8->setStyleSheet("background-color: red");
+	ui->lineEdit_Info_LS8->setText(tr("Url connot found!"));
+	ui->lineEdit_Info_S2->setStyleSheet("background-color: red");
+	ui->lineEdit_Info_S2->setText(tr("Url connot found!"));
+}
+
+
+void GCSatDownloader::dragEnterEvent(QDragEnterEvent *event)
+{
+	event->acceptProposedAction();
 }
