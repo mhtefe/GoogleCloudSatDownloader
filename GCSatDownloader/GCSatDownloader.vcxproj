@@ -98,7 +98,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;$(QTDIR)\include;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWebView;$(QTDIR)\include\QtWebKitWidgets;$(QTDIR)\include\QtWebKit;debug;$(QTDIR)\mkspecs\win32-msvc2013;.\GeneratedFiles;C:\OSGeo4W64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;$(QTDIR)\include;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWebView;$(QTDIR)\include\QtWebKitWidgets;$(QTDIR)\include\QtWebKit;debug;$(QTDIR)\mkspecs\win32-msvc2013;.\GeneratedFiles;C:\OSGeo4W64\include;.\GeneratedFiles\$(ConfigurationName);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -116,8 +116,8 @@
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(QTDIR)\lib\qtmaind.lib;shell32.lib;crypt32.lib;ws2_32.lib;dnsapi.lib;$(QTDIR)\lib\Qt5Cored.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Networkd.lib;$(QTDIR)\lib\Qt5WebViewd.lib;$(QTDIR)\lib\Qt5WebKitWidgetsd.lib;$(QTDIR)\lib\Qt5WebKitd.lib;C:\OSGeo4W64\lib\zdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(QTDIR)\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(QTDIR)\lib\qtmaind.lib;shell32.lib;crypt32.lib;ws2_32.lib;dnsapi.lib;$(QTDIR)\lib\Qt5Cored.lib;$(QTDIR)\lib\Qt5Widgetsd.lib;$(QTDIR)\lib\Qt5Guid.lib;$(QTDIR)\lib\Qt5Networkd.lib;$(QTDIR)\lib\Qt5WebViewd.lib;$(QTDIR)\lib\Qt5WebKitWidgetsd.lib;$(QTDIR)\lib\Qt5WebKitd.lib;C:\OSGeo4W64\lib\zdll.lib;gdal_i.lib;qtmaind.lib;Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;C:\OSGeo4W64\lib;C:\OSGeo4W64\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -177,7 +177,7 @@ endlocal
 if errorlevel 1 goto VCEnd
 if errorlevel 1 goto VCEnd
 endlocal
-"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include"</Command>
+"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include" "-I.\GeneratedFiles\$(ConfigurationName)"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -203,7 +203,7 @@ endlocal
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include" "-I.\GeneratedFiles\$(ConfigurationName)"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -213,7 +213,7 @@ endlocal
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include" "-I.\GeneratedFiles\$(ConfigurationName)"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -223,7 +223,7 @@ endlocal
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include" "-I.\GeneratedFiles\$(ConfigurationName)"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -235,7 +235,7 @@ endlocal
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing calendarwidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include" "-I.\GeneratedFiles\$(ConfigurationName)"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing calendarwidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -247,7 +247,7 @@ endlocal
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -D_CONSOLE -DUNICODE -DWIN32 -DWIN64 -D%(PreprocessorDefinitions)  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWebView" "-I$(QTDIR)\include\QtWebKitWidgets" "-I$(QTDIR)\include\QtWebKit" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I.\GeneratedFiles" "-IC:\OSGeo4W64\include" "-I.\GeneratedFiles\$(ConfigurationName)"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>

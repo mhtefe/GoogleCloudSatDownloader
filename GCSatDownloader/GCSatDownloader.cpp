@@ -10,6 +10,10 @@
 #include "GCSatDownloader.h"
 #include "ui_gcsatdownloader.h"
 #include <qmimedata.h>
+#include <gdal.h>
+#include <gdal_priv.h>
+
+
 
 using namespace std;
 
@@ -443,6 +447,7 @@ void GCSatDownloader::updateInfoTags_S2(int row)
 	ui->label_4_S2->setText(scn.S2_SENSING_TIME.toString("dd.MM.yyyy"));
 	ui->label_5_S2->setText(QString::number(scn.S2_CLOUD_COVER));
 
+
 	ui->LineEdit_North_S2->setText(QString::number(scn.S2_NORTH_LAT));
 	ui->LineEdit_South_S2->setText(QString::number(scn.S2_SOUTH_LAT));
 	ui->LineEdit_East_S2->setText(QString::number(scn.S2_EAST_LON));
@@ -620,7 +625,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 	if (m_LS8_Searcher->m_vlb.size() == 0 || m_datas_Index_LS8 < 0 || m_datas_Index_LS8 >= m_LS8_Searcher->m_vlb.size()) 
 	{
 		ui->lineEdit_Info_LS8->setStyleSheet("background-color: red");
-		ui->lineEdit_Info_LS8->setText(QString("Serach result is empty or invalid index"));
+		ui->lineEdit_Info_LS8->setText(QString("Search result is empty or invalid index"));
 		return;
 	}
 	// get selected band 
@@ -664,7 +669,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_S2_clicked()
 	if (m_S2_Searcher->m_vlb.size() == 0 || m_datas_Index_S2 < 0 || m_datas_Index_S2 >= m_S2_Searcher->m_vlb.size())
 	{
 		ui->lineEdit_Info_S2->setStyleSheet("background-color: red");
-		ui->lineEdit_Info_S2->setText(QString("Serach result is empty or invalid index"));
+		ui->lineEdit_Info_S2->setText(QString("Search result is empty or invalid index"));
 		return;
 	}
 
@@ -910,11 +915,61 @@ void GCSatDownloader::dropEvent(QDropEvent *event)
 		QList<QUrl> urlList = mimeData->urls();
 		QString text;
 		for (int i = 0; i < urlList.size() && i < 32; ++i)
-			text += urlList.at(i).path() + QLatin1Char('\n');
+			text += urlList.at(i).path();
+			//text += urlList.at(i).path() + QLatin1Char('\n');
 		ui->lineEdit_Info_LS8->setStyleSheet("background-color: green");
 		ui->lineEdit_Info_S2->setStyleSheet("background-color: green");
 		ui->lineEdit_Info_LS8->setText(text);
 		ui->lineEdit_Info_S2->setText(text);
+		std::string path1 = text.toLocal8Bit().constData();
+		path1 = path1.substr(1, path1.size());
+		string testcase = path1.substr(path1.size() - 4, path1.size());
+
+		
+		if (testcase == ".TIF") {
+			GDALAllRegister();
+			GDALDataset *data;
+			int rowN, colN;
+
+			const int constante = path1.length();
+			char* path = new char[constante];
+			for (int i = 0; i < text.size(); i++)
+				path[i] = path1[i];
+
+
+			data = (GDALDataset*)GDALOpen(path, GA_ReadOnly);
+			double transform[6];
+			data->GetGeoTransform(transform);
+			int cx, cy;
+			colN = data->GetRasterBand(1)->GetXSize();
+			rowN = data->GetRasterBand(1)->GetYSize();
+
+
+			cx = transform[0] + (1 * transform[1]) + (1 * transform[2]);
+			cy = transform[3] + (1 * transform[4]) + (1 * transform[5]);
+
+			cx += transform[0] + (colN*transform[1]) + (rowN*transform[2]);
+			cy += transform[3] + (colN*transform[4]) + (rowN*transform[5]);
+
+			cx = cx / 2;
+			cy = cy / 2;
+
+			QString scx = QString::number(cx);
+			QString scy = QString::number(cy);
+
+			ui->LineEdit_Lat_LS8->setText(scy);
+			ui->LineEdit_Lon_LS8->setText(scx);
+			ui->LineEdit_Lat_S2->setText(scy);
+			ui->LineEdit_Lon_S2->setText(scx);
+			//delete path;
+
+		}
+		else {
+			ui->LineEdit_Lat_LS8->clear();
+			ui->LineEdit_Lon_LS8->clear();
+			ui->LineEdit_Lat_S2->clear();
+			ui->LineEdit_Lon_S2->clear();
+		}
 		return;
 	}
 	ui->lineEdit_Info_LS8->setStyleSheet("background-color: red");
