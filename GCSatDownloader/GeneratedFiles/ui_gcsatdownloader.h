@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateEdit>
 #include <QtWidgets/QFormLayout>
@@ -43,6 +44,7 @@ public:
     QTabWidget *tabWidget;
     QWidget *tab_1_gcs_ls8;
     QGridLayout *gridLayout_3;
+    QLineEdit *lineEdit_Info_LS8;
     QSplitter *splitter_2;
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_5;
@@ -109,11 +111,15 @@ public:
     QTableWidget *tableWidget_datas_LS8;
     QWidget *layoutWidget1;
     QGridLayout *gridLayout;
-    QTableWidget *tableWidget_LS8;
+    QLabel *L8_Label;
     QHBoxLayout *horizontalLayout_7;
     QComboBox *comboBox_Bands_LS8;
     QPushButton *pushButton_DownloadImage_LS8;
-    QLineEdit *lineEdit_Info_LS8;
+    QCheckBox *checkBox_Thumbnail_LS8;
+    QCheckBox *checkBox_RgbNir_LS8;
+    QCheckBox *checkBox_FullPackage_LS8;
+    QCheckBox *checkBox_Ndvi_LS8;
+    QCheckBox *checkBox_Rgb_LS8;
     QWidget *tab_2_gcs_s2;
     QGridLayout *gridLayout_8;
     QSplitter *splitter;
@@ -165,7 +171,6 @@ public:
     QVBoxLayout *verticalLayout_8;
     QLabel *Label_West_S2;
     QLineEdit *LineEdit_West_S2;
-    QSpacerItem *horizontalSpacer_8;
     QVBoxLayout *verticalLayout_9;
     QLabel *Label_East_S2;
     QLineEdit *LineEdit_East_S2;
@@ -178,10 +183,15 @@ public:
     QTableWidget *tableWidget_datas_S2;
     QWidget *layoutWidget3;
     QGridLayout *gridLayout_12;
-    QTableWidget *tableWidget_S2;
     QHBoxLayout *horizontalLayout_14;
     QComboBox *comboBox_Bands_S2;
     QPushButton *pushButton_DownloadImage_S2;
+    QCheckBox *checkBox_Thumbnail_S2;
+    QCheckBox *checkBox_Rgb_S2;
+    QCheckBox *checkBox_Ndvi_S2;
+    QCheckBox *checkBox_RgbNir_S2;
+    QCheckBox *checkBox_FullPackage_S2;
+    QLabel *S2_Label;
     QLineEdit *lineEdit_Info_S2;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -190,7 +200,7 @@ public:
     {
         if (GcSatDownloader->objectName().isEmpty())
             GcSatDownloader->setObjectName(QStringLiteral("GcSatDownloader"));
-        GcSatDownloader->resize(1019, 515);
+        GcSatDownloader->resize(1019, 550);
         QIcon icon;
         icon.addFile(QStringLiteral("uzaylogo.jpeg"), QSize(), QIcon::Normal, QIcon::Off);
         GcSatDownloader->setWindowIcon(icon);
@@ -208,6 +218,13 @@ public:
         gridLayout_3->setSpacing(6);
         gridLayout_3->setContentsMargins(11, 11, 11, 11);
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        lineEdit_Info_LS8 = new QLineEdit(tab_1_gcs_ls8);
+        lineEdit_Info_LS8->setObjectName(QStringLiteral("lineEdit_Info_LS8"));
+        lineEdit_Info_LS8->setReadOnly(true);
+        lineEdit_Info_LS8->setClearButtonEnabled(true);
+
+        gridLayout_3->addWidget(lineEdit_Info_LS8, 1, 0, 1, 1);
+
         splitter_2 = new QSplitter(tab_1_gcs_ls8);
         splitter_2->setObjectName(QStringLiteral("splitter_2"));
         splitter_2->setOrientation(Qt::Horizontal);
@@ -586,10 +603,10 @@ public:
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        tableWidget_LS8 = new QTableWidget(layoutWidget1);
-        tableWidget_LS8->setObjectName(QStringLiteral("tableWidget_LS8"));
+        L8_Label = new QLabel(layoutWidget1);
+        L8_Label->setObjectName(QStringLiteral("L8_Label"));
 
-        gridLayout->addWidget(tableWidget_LS8, 1, 0, 1, 1);
+        gridLayout->addWidget(L8_Label, 6, 0, 1, 1);
 
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setSpacing(6);
@@ -607,16 +624,34 @@ public:
 
         gridLayout->addLayout(horizontalLayout_7, 0, 0, 1, 1);
 
+        checkBox_Thumbnail_LS8 = new QCheckBox(layoutWidget1);
+        checkBox_Thumbnail_LS8->setObjectName(QStringLiteral("checkBox_Thumbnail_LS8"));
+
+        gridLayout->addWidget(checkBox_Thumbnail_LS8, 1, 0, 1, 1);
+
+        checkBox_RgbNir_LS8 = new QCheckBox(layoutWidget1);
+        checkBox_RgbNir_LS8->setObjectName(QStringLiteral("checkBox_RgbNir_LS8"));
+
+        gridLayout->addWidget(checkBox_RgbNir_LS8, 4, 0, 1, 1);
+
+        checkBox_FullPackage_LS8 = new QCheckBox(layoutWidget1);
+        checkBox_FullPackage_LS8->setObjectName(QStringLiteral("checkBox_FullPackage_LS8"));
+
+        gridLayout->addWidget(checkBox_FullPackage_LS8, 2, 0, 1, 1);
+
+        checkBox_Ndvi_LS8 = new QCheckBox(layoutWidget1);
+        checkBox_Ndvi_LS8->setObjectName(QStringLiteral("checkBox_Ndvi_LS8"));
+
+        gridLayout->addWidget(checkBox_Ndvi_LS8, 5, 0, 1, 1);
+
+        checkBox_Rgb_LS8 = new QCheckBox(layoutWidget1);
+        checkBox_Rgb_LS8->setObjectName(QStringLiteral("checkBox_Rgb_LS8"));
+
+        gridLayout->addWidget(checkBox_Rgb_LS8, 3, 0, 1, 1);
+
         splitter_2->addWidget(layoutWidget1);
 
         gridLayout_3->addWidget(splitter_2, 0, 0, 1, 1);
-
-        lineEdit_Info_LS8 = new QLineEdit(tab_1_gcs_ls8);
-        lineEdit_Info_LS8->setObjectName(QStringLiteral("lineEdit_Info_LS8"));
-        lineEdit_Info_LS8->setReadOnly(true);
-        lineEdit_Info_LS8->setClearButtonEnabled(true);
-
-        gridLayout_3->addWidget(lineEdit_Info_LS8, 1, 0, 1, 1);
 
         tabWidget->addTab(tab_1_gcs_ls8, QString());
         tab_2_gcs_s2 = new QWidget();
@@ -878,10 +913,6 @@ public:
 
         horizontalLayout_12->addLayout(verticalLayout_8);
 
-        horizontalSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_12->addItem(horizontalSpacer_8);
-
         verticalLayout_9 = new QVBoxLayout();
         verticalLayout_9->setSpacing(6);
         verticalLayout_9->setObjectName(QStringLiteral("verticalLayout_9"));
@@ -975,11 +1006,6 @@ public:
         gridLayout_12->setContentsMargins(11, 11, 11, 11);
         gridLayout_12->setObjectName(QStringLiteral("gridLayout_12"));
         gridLayout_12->setContentsMargins(0, 0, 0, 0);
-        tableWidget_S2 = new QTableWidget(layoutWidget3);
-        tableWidget_S2->setObjectName(QStringLiteral("tableWidget_S2"));
-
-        gridLayout_12->addWidget(tableWidget_S2, 1, 0, 1, 1);
-
         horizontalLayout_14 = new QHBoxLayout();
         horizontalLayout_14->setSpacing(6);
         horizontalLayout_14->setObjectName(QStringLiteral("horizontalLayout_14"));
@@ -995,6 +1021,36 @@ public:
 
 
         gridLayout_12->addLayout(horizontalLayout_14, 0, 0, 1, 1);
+
+        checkBox_Thumbnail_S2 = new QCheckBox(layoutWidget3);
+        checkBox_Thumbnail_S2->setObjectName(QStringLiteral("checkBox_Thumbnail_S2"));
+
+        gridLayout_12->addWidget(checkBox_Thumbnail_S2, 1, 0, 1, 1);
+
+        checkBox_Rgb_S2 = new QCheckBox(layoutWidget3);
+        checkBox_Rgb_S2->setObjectName(QStringLiteral("checkBox_Rgb_S2"));
+
+        gridLayout_12->addWidget(checkBox_Rgb_S2, 3, 0, 1, 1);
+
+        checkBox_Ndvi_S2 = new QCheckBox(layoutWidget3);
+        checkBox_Ndvi_S2->setObjectName(QStringLiteral("checkBox_Ndvi_S2"));
+
+        gridLayout_12->addWidget(checkBox_Ndvi_S2, 5, 0, 1, 1);
+
+        checkBox_RgbNir_S2 = new QCheckBox(layoutWidget3);
+        checkBox_RgbNir_S2->setObjectName(QStringLiteral("checkBox_RgbNir_S2"));
+
+        gridLayout_12->addWidget(checkBox_RgbNir_S2, 4, 0, 1, 1);
+
+        checkBox_FullPackage_S2 = new QCheckBox(layoutWidget3);
+        checkBox_FullPackage_S2->setObjectName(QStringLiteral("checkBox_FullPackage_S2"));
+
+        gridLayout_12->addWidget(checkBox_FullPackage_S2, 2, 0, 1, 1);
+
+        S2_Label = new QLabel(layoutWidget3);
+        S2_Label->setObjectName(QStringLiteral("S2_Label"));
+
+        gridLayout_12->addWidget(S2_Label, 6, 0, 1, 1);
 
         splitter->addWidget(layoutWidget3);
 
@@ -1067,7 +1123,13 @@ public:
         LineEdit_East_LS8->setText(QString());
         Label_South_LS8->setText(QApplication::translate("GcSatDownloader", "South (Lat)", Q_NULLPTR));
         LineEdit_South_LS8->setText(QString());
+        L8_Label->setText(QApplication::translate("GcSatDownloader", "<html><head/><body><p align=\"center\">Thumbnail</p></body></html>", Q_NULLPTR));
         pushButton_DownloadImage_LS8->setText(QApplication::translate("GcSatDownloader", "Download File", Q_NULLPTR));
+        checkBox_Thumbnail_LS8->setText(QApplication::translate("GcSatDownloader", "Thumbnail", Q_NULLPTR));
+        checkBox_RgbNir_LS8->setText(QApplication::translate("GcSatDownloader", "RGBNIR", Q_NULLPTR));
+        checkBox_FullPackage_LS8->setText(QApplication::translate("GcSatDownloader", "Full Package", Q_NULLPTR));
+        checkBox_Ndvi_LS8->setText(QApplication::translate("GcSatDownloader", "NDVI", Q_NULLPTR));
+        checkBox_Rgb_LS8->setText(QApplication::translate("GcSatDownloader", "RGB", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_1_gcs_ls8), QApplication::translate("GcSatDownloader", "Landsat 8", Q_NULLPTR));
         groupBox_2->setTitle(QApplication::translate("GcSatDownloader", "\304\260ndeks Dosyas\304\261", Q_NULLPTR));
         pushButton_DownloadIndex_S2->setText(QApplication::translate("GcSatDownloader", "Donwload Index", Q_NULLPTR));
@@ -1103,6 +1165,12 @@ public:
         Label_South_S2->setText(QApplication::translate("GcSatDownloader", "South (Lat)", Q_NULLPTR));
         LineEdit_South_S2->setText(QString());
         pushButton_DownloadImage_S2->setText(QApplication::translate("GcSatDownloader", "Download File", Q_NULLPTR));
+        checkBox_Thumbnail_S2->setText(QApplication::translate("GcSatDownloader", "Thumbnail", Q_NULLPTR));
+        checkBox_Rgb_S2->setText(QApplication::translate("GcSatDownloader", "RGB", Q_NULLPTR));
+        checkBox_Ndvi_S2->setText(QApplication::translate("GcSatDownloader", "NDVI", Q_NULLPTR));
+        checkBox_RgbNir_S2->setText(QApplication::translate("GcSatDownloader", "RGBNIR", Q_NULLPTR));
+        checkBox_FullPackage_S2->setText(QApplication::translate("GcSatDownloader", "Full Package", Q_NULLPTR));
+        S2_Label->setText(QApplication::translate("GcSatDownloader", "<html><head/><body><p align=\"center\">Thumbnail</p></body></html>", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_2_gcs_s2), QApplication::translate("GcSatDownloader", "Sentinel 2", Q_NULLPTR));
     } // retranslateUi
 

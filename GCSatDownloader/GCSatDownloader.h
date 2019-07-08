@@ -88,8 +88,6 @@ private:
 	void updateInfoTags_LS8(int row);
 	void updateInfoTags_S2(int row);
 
-	void displayFolder();
-
 	string getWorkingDIR(void);
 	QString m_workingDirectory;
 
@@ -139,6 +137,7 @@ private slots:
 	void on_pushButton_ShowIndex_LS8_clicked();
 	void on_pushButton_ShowIndex_S2_clicked();
 	void displayFolder(int _ind);
+	void checkBoxSaves();
 	
 	void on_pushButton_DownloadImage_LS8_clicked();
 	void on_pushButton_DownloadImage_S2_clicked();

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1019</width>
-    <height>515</height>
+    <height>550</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,6 +29,16 @@
         <string>Landsat 8</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="lineEdit_Info_LS8">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QSplitter" name="splitter_2">
           <property name="orientation">
@@ -626,8 +636,12 @@
           </widget>
           <widget class="QWidget" name="layoutWidget">
            <layout class="QGridLayout" name="gridLayout">
-            <item row="1" column="0">
-             <widget class="QTableWidget" name="tableWidget_LS8"/>
+            <item row="6" column="0">
+             <widget class="QLabel" name="L8_Label">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Thumbnail&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
             </item>
             <item row="0" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -643,18 +657,43 @@
               </item>
              </layout>
             </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="checkBox_Thumbnail_LS8">
+              <property name="text">
+               <string>Thumbnail</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QCheckBox" name="checkBox_RgbNir_LS8">
+              <property name="text">
+               <string>RGBNIR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QCheckBox" name="checkBox_FullPackage_LS8">
+              <property name="text">
+               <string>Full Package</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QCheckBox" name="checkBox_Ndvi_LS8">
+              <property name="text">
+               <string>NDVI</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QCheckBox" name="checkBox_Rgb_LS8">
+              <property name="text">
+               <string>RGB</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="lineEdit_Info_LS8">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="clearButtonEnabled">
-           <bool>true</bool>
-          </property>
          </widget>
         </item>
        </layout>
@@ -1057,19 +1096,6 @@
                       </layout>
                      </item>
                      <item>
-                      <spacer name="horizontalSpacer_8">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item>
                       <layout class="QVBoxLayout" name="verticalLayout_9">
                        <item>
                         <widget class="QLabel" name="Label_East_S2">
@@ -1227,9 +1253,6 @@
           </widget>
           <widget class="QWidget" name="layoutWidget">
            <layout class="QGridLayout" name="gridLayout_12">
-            <item row="1" column="0">
-             <widget class="QTableWidget" name="tableWidget_S2"/>
-            </item>
             <item row="0" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_14">
               <item>
@@ -1243,6 +1266,48 @@
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="checkBox_Thumbnail_S2">
+              <property name="text">
+               <string>Thumbnail</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QCheckBox" name="checkBox_Rgb_S2">
+              <property name="text">
+               <string>RGB</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QCheckBox" name="checkBox_Ndvi_S2">
+              <property name="text">
+               <string>NDVI</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QCheckBox" name="checkBox_RgbNir_S2">
+              <property name="text">
+               <string>RGBNIR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QCheckBox" name="checkBox_FullPackage_S2">
+              <property name="text">
+               <string>Full Package</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="S2_Label">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Thumbnail&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
