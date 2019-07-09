@@ -68,6 +68,7 @@ class GCSatDownloader : public QMainWindow
 public:
     explicit GCSatDownloader(QWidget *parent = 0);
     ~GCSatDownloader();
+	void test1();
 protected:
 	void dragEnterEvent(QDragEnterEvent *event) override;
 	void dropEvent(QDropEvent *event) override;

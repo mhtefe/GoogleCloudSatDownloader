@@ -22,6 +22,7 @@
 #include "GeotiffData.h"
 #include "GK2ProductReader.h"
 
+#include <opencv2/imgproc.hpp>
 
 namespace mu = gik;
 using namespace std;
@@ -30,6 +31,8 @@ GCSatDownloader::GCSatDownloader(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GcSatDownloader)
 {
+	test1();
+
 	setupUiComponents();	
 
 	////////////////////////////////////////////////////////////////////////// ui paths
@@ -43,6 +46,42 @@ GCSatDownloader::GCSatDownloader(QWidget *parent) :
 
 	//////////////////////////////////////////////////////////////////////////
 
+}
+
+void GCSatDownloader::test1()
+{
+	mu::RasterManager red, blue, green, rgb;
+
+	blue.imread("C:\\Users\\Furkan\\Desktop\\UzayStarts\\GCSatDownloader\\release\\Images\\LANDSAT_8\\049\\221\\LC80492212013221LGN01\\LC08_L1GT_049221_20130809_20170503_01_T2_B2.TIF");
+
+	green.imread("C:\\Users\\Furkan\\Desktop\\UzayStarts\\GCSatDownloader\\release\\Images\\LANDSAT_8\\049\\221\\LC80492212013221LGN01\\LC08_L1GT_049221_20130809_20170503_01_T2_B3.TIF");
+
+	red.imread("C:\\Users\\Furkan\\Desktop\\UzayStarts\\GCSatDownloader\\release\\Images\\LANDSAT_8\\049\\221\\LC80492212013221LGN01\\LC08_L1GT_049221_20130809_20170503_01_T2_B4.TIF");
+
+	cv::Mat rgbMat;
+	vector<cv::Mat>bands;
+
+	blue.getCvMat()->convertTo(*blue.getCvMat(), CV_8U, 255 / 65535.0);
+	cv::resize(*blue.getCvMat(), *blue.getCvMat(), cv::Size(256, 256));
+	//equalizeHist(*blue.getCvMat(), *blue.getCvMat());
+	///clahe
+	cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
+	clahe->setClipLimit(4);
+	cv::Mat dst;
+	clahe->apply(*blue.getCvMat(), *blue.getCvMat());
+	bands.push_back(*blue.getCvMat());
+
+
+	green.getCvMat()->convertTo(*green.getCvMat(), CV_8U, 255 / 65535.0);
+	cv::resize(*green.getCvMat(), *green.getCvMat(), cv::Size(256, 256));
+	//equalizeHist(*green.getCvMat(), *green.getCvMat());
+	bands.push_back(*green.getCvMat());
+
+	red.getCvMat()->convertTo(*red.getCvMat(), CV_8U, 255 / 65535.0);
+	cv::resize(*red.getCvMat(), *red.getCvMat(), cv::Size(256, 256));
+	bands.push_back(*red.getCvMat());
+
+	cv::merge(bands, rgbMat);
 }
 
 GCSatDownloader::~GCSatDownloader()
@@ -1128,19 +1167,25 @@ void GCSatDownloader::checkBoxSaves(){
 		cv::Mat rgbMat;
 		vector<cv::Mat>bands;
 
-		red.getCvMat()->convertTo(*red.getCvMat(), CV_8U, 255 / 65535.0);
-		cv::resize(*red.getCvMat(), *red.getCvMat(), cv::Size(256, 256));
-		bands.push_back(*red.getCvMat());
+		blue.getCvMat()->convertTo(*blue.getCvMat(), CV_8U, 255 / 65535.0);
+		cv::resize(*blue.getCvMat(), *blue.getCvMat(), cv::Size(256, 256));
+		//equalizeHist(*blue.getCvMat(), *blue.getCvMat());
+		///clahe
+		cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
+		clahe->setClipLimit(4);
+		cv::Mat dst;
+		clahe->apply(*blue.getCvMat(), *blue.getCvMat());
+		bands.push_back(*blue.getCvMat());
+
 
 		green.getCvMat()->convertTo(*green.getCvMat(), CV_8U, 255 / 65535.0);
 		cv::resize(*green.getCvMat(), *green.getCvMat(), cv::Size(256, 256));
 		//equalizeHist(*green.getCvMat(), *green.getCvMat());
 		bands.push_back(*green.getCvMat());
 
-		blue.getCvMat()->convertTo(*blue.getCvMat(), CV_8U, 255 / 65535.0);
-		cv::resize(*blue.getCvMat(), *blue.getCvMat(), cv::Size(256, 256));
-		//equalizeHist(*blue.getCvMat(), *blue.getCvMat());
-		bands.push_back(*blue.getCvMat());
+		red.getCvMat()->convertTo(*red.getCvMat(), CV_8U, 255 / 65535.0);
+		cv::resize(*red.getCvMat(), *red.getCvMat(), cv::Size(256, 256));
+		bands.push_back(*red.getCvMat());
 
 		cv::merge(bands, rgbMat);
 
@@ -1345,20 +1390,26 @@ void GCSatDownloader::checkBoxSaves(){
 		cv::Mat rgbMat;
 		vector<cv::Mat>bands;
 
-		red.getCvMat()->convertTo(*red.getCvMat(), CV_8U, 255 / 65535.0);
+		//red.getCvMat()->convertTo(*red.getCvMat(), CV_8U, 255 / 65535.0);
+		red.getCvMat()->convertTo(*red.getCvMat(), CV_8U, 255.0 / 4095.0);
+		//red.getCvMat()->convertTo(*red.getCvMat(), CV_8U, 255 / 131071.0);
 		cv::resize(*red.getCvMat(), *red.getCvMat(), cv::Size(256, 256));
 		bands.push_back(*red.getCvMat());
 
-		green.getCvMat()->convertTo(*green.getCvMat(), CV_8U, 255 / 65535.0);
+		//green.getCvMat()->convertTo(*green.getCvMat(), CV_8U, 255 / 65535.0);
+		green.getCvMat()->convertTo(*green.getCvMat(), CV_8U, 255.0 / 4095.0);
+		//green.getCvMat()->convertTo(*green.getCvMat(), CV_8U, 255 / 131071.0);
 		cv::resize(*green.getCvMat(), *green.getCvMat(), cv::Size(256, 256));
 		bands.push_back(*green.getCvMat());
 
-		blue.getCvMat()->convertTo(*blue.getCvMat(), CV_8U, 255 / 65535.0);
+		//blue.getCvMat()->convertTo(*blue.getCvMat(), CV_8U, 255 / 65535.0);
+		blue.getCvMat()->convertTo(*blue.getCvMat(), CV_8U, 255.0 / 4095.0);
+		//blue.getCvMat()->convertTo(*blue.getCvMat(), CV_8U, 255 / 131071.0);
 		cv::resize(*blue.getCvMat(), *blue.getCvMat(), cv::Size(256, 256));
 		bands.push_back(*blue.getCvMat());
 
-		cv::merge(bands, rgbMat);
-
+		cv::merge(bands, rgbMat); 
+		
 		cv::Mat * matPtr = rgb.getCvMat();
 		rgbMat.copyTo(*matPtr);
 
