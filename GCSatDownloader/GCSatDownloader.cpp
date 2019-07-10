@@ -23,6 +23,9 @@
 #include "GK2ProductReader.h"
 
 #include <opencv2/imgproc.hpp>
+#include <opencv2/core/matx.hpp>
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/highgui.hpp"
 
 namespace mu = gik;
 using namespace std;
@@ -44,12 +47,123 @@ GCSatDownloader::GCSatDownloader(QWidget *parent) :
 	////////////////////////////////////////////////////////////////////////// bands
 	setupUiBandCombo();
 
-	//////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////u
 
+}
+
+int computeOutput(int x, int r1, int s1, int r2, int s2)
+{
+	float result;
+	if (0 <= x && x <= r1) {
+		result = s1 / r1 * x;
+	}
+	else if (r1 < x && x <= r2) {
+		result = ((s2 - s1) / (r2 - r1)) * (x - r1) + s1;
+	}
+	else if (r2 < x && x <= 255) {
+		result = ((255 - s2) / (255 - r2)) * (x - r2) + s2;
+	}
+	return (int)result;
 }
 
 void GCSatDownloader::test1()
 {
+	mu::RasterManager red, blue, green, rgb, rgbAgain;
+	cv::Mat redMat, blueMat, greenMat, rgbMat, rgbAgainMat;
+
+	red.imread("C:/Test/red.tif");
+	blue.imread("C:/Test/blue.tif");
+	green.imread("C:/Test/green.tif");
+
+	vector<cv::Mat>bands;
+	int ClaheValue, linearValue;
+	cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
+
+	
+	ClaheValue = 19000;
+	linearValue = 19000;
+	/*
+	for (int y = 0; y < red.getCvMat()->rows - 1; y++) {
+		for (int x = 0; x < red.getCvMat()->cols - 1; x++) {
+			
+			if (max < red.getCvMat()->at<cv::Vec3b>(y, x)[0])
+				max = red.getCvMat()->at<cv::Vec3b>(y, x)[0];
+			if(min > red.getCvMat()->at<cv::Vec3b>(y, x)[0])
+				min = red.getCvMat()->at<cv::Vec3b>(y, x)[0];
+		}
+	}*/
+	red.getCvMat()->convertTo(*red.getCvMat(), CV_8U, 255.0 / ClaheValue);
+	cv::resize(*red.getCvMat(), *red.getCvMat(), cv::Size(256, 256));
+	clahe->setClipLimit(4);
+	clahe->apply(*red.getCvMat(), *red.getCvMat());
+
+
+	/*
+	max = 0;
+	min = 65535;
+	for (int y = 0; y < blue.getCvMat()->rows - 1; y++) {
+		for (int x = 0; x < blue.getCvMat()->cols - 1; x++) {
+
+			if (max < blue.getCvMat()->at<cv::Vec3b>(y, x)[0])
+				max = blue.getCvMat()->at<cv::Vec3b>(y, x)[0];
+			if (min > blue.getCvMat()->at<cv::Vec3b>(y, x)[0])
+				min = blue.getCvMat()->at<cv::Vec3b>(y, x)[0];
+		}
+	}*/
+	blue.getCvMat()->convertTo(*blue.getCvMat(), CV_8U, 255.0 / ClaheValue);
+	cv::resize(*blue.getCvMat(), *blue.getCvMat(), cv::Size(256, 256));
+	clahe->setClipLimit(4);
+	clahe->apply(*blue.getCvMat(), *blue.getCvMat());
+
+
+	/*
+	max = 0;
+	min = 65535;
+	for (int y = 0; y < green.getCvMat()->rows - 1; y++) {
+		for (int x = 0; x < green.getCvMat()->cols - 1; x++) {
+
+			if (max < green.getCvMat()->at<cv::Vec3b>(y, x)[0])
+				max = green.getCvMat()->at<cv::Vec3b>(y, x)[0];
+			if (min > green.getCvMat()->at<cv::Vec3b>(y, x)[0])
+				min = green.getCvMat()->at<cv::Vec3b>(y, x)[0];
+		}
+	}*/
+	green.getCvMat()->convertTo(*green.getCvMat(), CV_8U, 255.0 / ClaheValue);
+	cv::resize(*green.getCvMat(), *green.getCvMat(), cv::Size(256, 256));
+	clahe->setClipLimit(4);
+	clahe->apply(*green.getCvMat(), *green.getCvMat());
+	
+	bands.push_back(*blue.getCvMat());
+	bands.push_back(*green.getCvMat());
+	bands.push_back(*red.getCvMat());
+
+	cv::merge(bands, rgbMat);
+	/*
+	for (int y = 0; y < rgbMat.rows; y++) {
+		for (int x = 0; x < rgbMat.cols; x++) {
+			for (int c = 0; c < 3; c++) {
+				int output = computeOutput(rgbMat.at<cv::Vec3b>(y, x)[c], 70, 0, 180, 255);
+				rgbMat.at<cv::Vec3b>(y, x)[c] = cv::saturate_cast<uchar>(output);
+			}
+		}
+	}*/
+
+
+
+	cv::Mat * matPtr = rgb.getCvMat();
+	rgbMat.copyTo(*matPtr);
+
+	cv::imwrite("C:/Test/rgb.png", *rgb.getCvMat());
+
+	//rgbAgain.imread("C:/Test/rgb.tif");
+
+	//cv::Mat rgbMatAgain;
+
+	//rgb.imsave("C:/Test/rgb.tif");
+	//rgb.imsave("C:/Test/rgb.png");
+	//cv::imwrite("C:/Test/gree.tif", rgb);
+
+	/*
 	mu::RasterManager red, blue, green, rgb;
 
 	blue.imread("C:\\Users\\Furkan\\Desktop\\UzayStarts\\GCSatDownloader\\release\\Images\\LANDSAT_8\\049\\221\\LC80492212013221LGN01\\LC08_L1GT_049221_20130809_20170503_01_T2_B2.TIF");
@@ -81,7 +195,7 @@ void GCSatDownloader::test1()
 	cv::resize(*red.getCvMat(), *red.getCvMat(), cv::Size(256, 256));
 	bands.push_back(*red.getCvMat());
 
-	cv::merge(bands, rgbMat);
+	cv::merge(bands, rgbMat);*/
 }
 
 GCSatDownloader::~GCSatDownloader()
