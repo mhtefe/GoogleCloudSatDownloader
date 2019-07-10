@@ -27,6 +27,12 @@
 
 #include "zlib.h"
 
+typedef struct AfterPartyType
+{
+	DataSource m_dataSource;
+	QString m_fullFolderPath;
+};
+
 namespace Ui {
 class GcSatDownloader;
 }
@@ -108,6 +114,9 @@ private:
 	int m_datas_Index_S2;
 	int searchId;
 	int decompress_one_file(const char *infilename, const char *outfilename);
+
+	QQueue<AfterPartyType> m_afterPartyList;
+	void validateThumbnail(AfterPartyType _t);
 
 	QString getDownloadLink_LS8(int _bandIndex);
 	QString getDownloadLink_S2(int _bandIndex);
