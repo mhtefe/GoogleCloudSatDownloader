@@ -75,6 +75,7 @@ public:
     explicit GCSatDownloader(QWidget *parent = 0);
     ~GCSatDownloader();
 	void test1();
+	
 protected:
 	void dragEnterEvent(QDragEnterEvent *event) override;
 	void dropEvent(QDropEvent *event) override;
@@ -117,6 +118,10 @@ private:
 
 	QQueue<AfterPartyType> m_afterPartyList;
 	void validateThumbnail(AfterPartyType _t);
+	void validateFullPackage(AfterPartyType _t);
+	void validateRGB(AfterPartyType _t);
+	void validateRGBNIR(AfterPartyType _t);
+	void validateNDVI(AfterPartyType _t);
 
 	QString getDownloadLink_LS8(int _bandIndex);
 	QString getDownloadLink_S2(int _bandIndex);
