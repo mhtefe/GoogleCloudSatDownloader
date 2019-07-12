@@ -29,8 +29,9 @@
 
 typedef struct AfterPartyType
 {
+	bool ThumbnailWasChecked, FullPackageWasChecked, RGBWasChecked, RGBNirWasChecked, NDVIWasChecked;
+	QString paths[20];
 	DataSource m_dataSource;
-	QString m_fullFolderPath;
 };
 
 namespace Ui {
