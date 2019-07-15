@@ -126,8 +126,8 @@ private:
 
 	QString getDownloadLink_LS8(int _bandIndex);
 	QString getDownloadLink_S2(int _bandIndex);
-	QString getImageFolderPath_LS8(int _bandIndex);
-	QString getImageFolderPath_S2(int _bandIndex);
+	QString getImageFolderPath_LS8(int _bandIndex, bool create = true);
+	QString getImageFolderPath_S2(int _bandIndex, bool create = true);
 	QString getBandString_LS8(int i);
 	QString getBandString_S2(int i);
 

@@ -607,7 +607,7 @@ void GCSatDownloader::updateInfoTags_LS8(int row)
 
 	ui->lineEdit_Info_LS8->setText(scn.LS8_BASE_URL);
 
-	QString flink = getImageFolderPath_LS8(15);
+	QString flink = getImageFolderPath_LS8(15, false);
 	if (QFileInfo().exists(flink)) {
 		QPixmap pix(flink);
 		//pix = pix.scaled(ui->L8_Label->size(), Qt::KeepAspectRatio);
@@ -636,7 +636,7 @@ void GCSatDownloader::updateInfoTags_S2(int row)
 
 	ui->lineEdit_Info_S2->setText(scn.S2_BASE_URL);
 
-	QString flink = getImageFolderPath_S2(15);
+	QString flink = getImageFolderPath_S2(15, false);
 	if (QFileInfo().exists(flink)) {
 		QPixmap pix(flink);
 		ui->S2_Label->setPixmap(pix);
@@ -837,7 +837,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 
 		AfterPartyType t;
 		for (int i = 0; i < 20; i++)
-			t.paths[i] = getImageFolderPath_LS8(i);
+			t.paths[i] = getImageFolderPath_LS8(i, false);
 		t.m_dataSource = GCP_LANDSAT8;
 		t.FullPackageWasChecked = ui->checkBox_FullPackage_LS8->isChecked();
 		t.ThumbnailWasChecked = ui->checkBox_Thumbnail_LS8->isChecked();
@@ -851,7 +851,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 	{
 		AfterPartyType t;
 		for (int i = 0; i < 20; i++)
-			t.paths[i] = getImageFolderPath_LS8(i);
+			t.paths[i] = getImageFolderPath_LS8(i, false);
 		t.m_dataSource = GCP_LANDSAT8;
 		t.FullPackageWasChecked = ui->checkBox_FullPackage_LS8->isChecked();
 		t.ThumbnailWasChecked = ui->checkBox_Thumbnail_LS8->isChecked();
@@ -906,7 +906,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_S2_clicked()
 
 		AfterPartyType t;
 		for (int i = 0; i < 20; i++)
-			t.paths[i] = getImageFolderPath_S2(i);
+			t.paths[i] = getImageFolderPath_S2(i, false);
 		t.m_dataSource = GCP_SENTINEL2;
 		t.FullPackageWasChecked = ui->checkBox_FullPackage_S2->isChecked();
 		t.ThumbnailWasChecked = ui->checkBox_Thumbnail_S2->isChecked();
@@ -921,7 +921,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_S2_clicked()
 
 		AfterPartyType t;
 		for (int i = 0; i < 20; i++)
-			t.paths[i] = getImageFolderPath_S2(i);
+			t.paths[i] = getImageFolderPath_S2(i, false);
 		t.m_dataSource = GCP_SENTINEL2;
 		t.FullPackageWasChecked = ui->checkBox_FullPackage_S2->isChecked();
 		t.ThumbnailWasChecked = ui->checkBox_Thumbnail_S2->isChecked();
@@ -953,28 +953,28 @@ void GCSatDownloader::on_pushButton_DownloadImage_S2_clicked()
 
 ////////////////////////////////////////////////////////////////////////// ls8 url & dir
 // Band index --> 15 = Thumbnail, 16 = FullPackage, 17 = RGB, 18 = RGBNir
-QString GCSatDownloader::getImageFolderPath_LS8(int _bandIndex)
+QString GCSatDownloader::getImageFolderPath_LS8(int _bandIndex, bool create)
 {
 	GCP_LANDSAT8_LABEL scn = m_LS8_Searcher->m_vlb[m_datas_Index_LS8];
 
 	QString imagePath = m_images_dir + QString("\\");
 	imagePath.append(scn.LS8_SPACECRAFT_ID);
-	if (!QDir(imagePath).exists())
+	if (!QDir(imagePath).exists() && create == true)
 	{
 		QDir().mkdir(imagePath);
 	}
 	imagePath.append(QString("\\")).append(QString(scn.LS8_WRS_PATH));
-	if (!QDir(imagePath).exists())
+	if (!QDir(imagePath).exists() && create == true)
 	{
 		QDir().mkdir(imagePath);
 	}
 	imagePath.append(QString("\\")).append(QString(scn.LS8_WRS_ROW));
-	if (!QDir(imagePath).exists())
+	if (!QDir(imagePath).exists() && create == true)
 	{
 		QDir().mkdir(imagePath);
 	}
 	imagePath.append(QString("\\")).append(scn.LS8_SCENE_ID);
-	if (!QDir(imagePath).exists())
+	if (!QDir(imagePath).exists() && create == true)
 	{
 		QDir().mkdir(imagePath);
 	}
@@ -1110,23 +1110,23 @@ QString GCSatDownloader::getBandString_LS8(int _i)
 }
 
 ////////////////////////////////////////////////////////////////////////// s2 url & dir
-QString GCSatDownloader::getImageFolderPath_S2(int _bandIndex)
+QString GCSatDownloader::getImageFolderPath_S2(int _bandIndex, bool create)
 {
 	GCP_SENTINEL2_LABEL scn = m_S2_Searcher->m_vlb[m_datas_Index_S2];
 
 	QString imagePath = m_images_dir + QString("\\");
 	imagePath.append("SENTINEL_2");
-	if (!QDir(imagePath).exists())
+	if (!QDir(imagePath).exists() && create == true)
 	{
 		QDir().mkdir(imagePath);
 	}
 	imagePath.append(QString("\\")).append(scn.S2_MGRS_TILE);
-	if (!QDir(imagePath).exists())
+	if (!QDir(imagePath).exists() && create == true)
 	{
 		QDir().mkdir(imagePath);
 	}
 	imagePath.append(QString("\\")).append(scn.S2_PRODUCT_ID);
-	if (!QDir(imagePath).exists())
+	if (!QDir(imagePath).exists() && create == true)
 	{
 		QDir().mkdir(imagePath);
 	}
@@ -1329,8 +1329,8 @@ void GCSatDownloader::dropEvent(QDropEvent *event)
 				sscy[5] = scy[4];
 			}
 
-			QString qscy = QString::fromStdString(sscy);
-			QString qscx = QString::fromStdString(sscx);
+			QString qscy = QString::fromStdString(scy);
+			QString qscx = QString::fromStdString(scx);
 
 			ui->LineEdit_Lat_LS8->setText(qscy);
 			ui->LineEdit_Lon_LS8->setText(qscx);
