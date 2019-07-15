@@ -867,6 +867,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 		{
 			this->statusBar()->setStyleSheet("background-color: yellow");
 			this->statusBar()->showMessage(flink + tr(" Image already exists."));
+			checkBoxSaves();
 			return;
 		}
 		this->statusBar()->setStyleSheet("background-color: yellow");
@@ -938,6 +939,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_S2_clicked()
 		{
 			this->statusBar()->setStyleSheet("background-color: yellow");
 			this->statusBar()->showMessage(flink + tr(" Image already exists."));
+			checkBoxSaves();
 			return;
 		}
 		this->statusBar()->setStyleSheet("background-color: yellow");
