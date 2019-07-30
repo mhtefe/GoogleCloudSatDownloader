@@ -112,14 +112,15 @@ public:
     QWidget *layoutWidget1;
     QGridLayout *gridLayout;
     QCheckBox *checkBox_Thumbnail_LS8;
+    QCheckBox *checkBox_Ndvi_LS8;
     QCheckBox *checkBox_FullPackage_LS8;
+    QCheckBox *checkBox_Rgb_LS8;
     QLabel *L8_Label;
     QHBoxLayout *horizontalLayout_7;
     QComboBox *comboBox_Bands_LS8;
     QPushButton *pushButton_DownloadImage_LS8;
     QCheckBox *checkBox_RgbNir_LS8;
-    QCheckBox *checkBox_Rgb_LS8;
-    QCheckBox *checkBox_Ndvi_LS8;
+    QCheckBox *checkBox_Img_LS8;
     QWidget *tab_2_gcs_s2;
     QGridLayout *gridLayout_8;
     QSplitter *splitter;
@@ -609,15 +610,25 @@ public:
 
         gridLayout->addWidget(checkBox_Thumbnail_LS8, 1, 0, 1, 1);
 
+        checkBox_Ndvi_LS8 = new QCheckBox(layoutWidget1);
+        checkBox_Ndvi_LS8->setObjectName(QStringLiteral("checkBox_Ndvi_LS8"));
+
+        gridLayout->addWidget(checkBox_Ndvi_LS8, 5, 0, 1, 1);
+
         checkBox_FullPackage_LS8 = new QCheckBox(layoutWidget1);
         checkBox_FullPackage_LS8->setObjectName(QStringLiteral("checkBox_FullPackage_LS8"));
 
         gridLayout->addWidget(checkBox_FullPackage_LS8, 2, 0, 1, 1);
 
+        checkBox_Rgb_LS8 = new QCheckBox(layoutWidget1);
+        checkBox_Rgb_LS8->setObjectName(QStringLiteral("checkBox_Rgb_LS8"));
+
+        gridLayout->addWidget(checkBox_Rgb_LS8, 3, 0, 1, 1);
+
         L8_Label = new QLabel(layoutWidget1);
         L8_Label->setObjectName(QStringLiteral("L8_Label"));
 
-        gridLayout->addWidget(L8_Label, 6, 0, 1, 1);
+        gridLayout->addWidget(L8_Label, 7, 0, 1, 1);
 
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setSpacing(6);
@@ -640,15 +651,11 @@ public:
 
         gridLayout->addWidget(checkBox_RgbNir_LS8, 4, 0, 1, 1);
 
-        checkBox_Rgb_LS8 = new QCheckBox(layoutWidget1);
-        checkBox_Rgb_LS8->setObjectName(QStringLiteral("checkBox_Rgb_LS8"));
+        checkBox_Img_LS8 = new QCheckBox(layoutWidget1);
+        checkBox_Img_LS8->setObjectName(QStringLiteral("checkBox_Img_LS8"));
+        checkBox_Img_LS8->setChecked(true);
 
-        gridLayout->addWidget(checkBox_Rgb_LS8, 3, 0, 1, 1);
-
-        checkBox_Ndvi_LS8 = new QCheckBox(layoutWidget1);
-        checkBox_Ndvi_LS8->setObjectName(QStringLiteral("checkBox_Ndvi_LS8"));
-
-        gridLayout->addWidget(checkBox_Ndvi_LS8, 5, 0, 1, 1);
+        gridLayout->addWidget(checkBox_Img_LS8, 6, 0, 1, 1);
 
         splitter_2->addWidget(layoutWidget1);
 
@@ -1125,12 +1132,13 @@ public:
         Label_South_LS8->setText(QApplication::translate("GcSatDownloader", "South (Lat)", Q_NULLPTR));
         LineEdit_South_LS8->setText(QString());
         checkBox_Thumbnail_LS8->setText(QApplication::translate("GcSatDownloader", "Thumbnail", Q_NULLPTR));
+        checkBox_Ndvi_LS8->setText(QApplication::translate("GcSatDownloader", "NDVI", Q_NULLPTR));
         checkBox_FullPackage_LS8->setText(QApplication::translate("GcSatDownloader", "Full Package", Q_NULLPTR));
+        checkBox_Rgb_LS8->setText(QApplication::translate("GcSatDownloader", "RGB", Q_NULLPTR));
         L8_Label->setText(QApplication::translate("GcSatDownloader", "<html><head/><body><p align=\"center\">Thumbnail</p></body></html>", Q_NULLPTR));
         pushButton_DownloadImage_LS8->setText(QApplication::translate("GcSatDownloader", "Download File", Q_NULLPTR));
         checkBox_RgbNir_LS8->setText(QApplication::translate("GcSatDownloader", "RGBNIR", Q_NULLPTR));
-        checkBox_Rgb_LS8->setText(QApplication::translate("GcSatDownloader", "RGB", Q_NULLPTR));
-        checkBox_Ndvi_LS8->setText(QApplication::translate("GcSatDownloader", "NDVI", Q_NULLPTR));
+        checkBox_Img_LS8->setText(QApplication::translate("GcSatDownloader", "*.img", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_1_gcs_ls8), QApplication::translate("GcSatDownloader", "Landsat 8", Q_NULLPTR));
         groupBox_2->setTitle(QApplication::translate("GcSatDownloader", "\304\260ndeks Dosyas\304\261", Q_NULLPTR));
         pushButton_DownloadIndex_S2->setText(QApplication::translate("GcSatDownloader", "Donwload Index", Q_NULLPTR));

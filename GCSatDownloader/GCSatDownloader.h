@@ -29,8 +29,8 @@
 
 typedef struct AfterPartyType
 {
-	bool ThumbnailWasChecked, FullPackageWasChecked, RGBWasChecked, RGBNirWasChecked, NDVIWasChecked;
-	QString paths[20];
+	bool ThumbnailWasChecked, FullPackageWasChecked, RGBWasChecked, RGBNirWasChecked, NDVIWasChecked, ImgWasChecked; 
+	QString paths[21];
 	DataSource m_dataSource;
 };
 
@@ -123,6 +123,7 @@ private:
 	void validateRGB(AfterPartyType _t);
 	void validateRGBNIR(AfterPartyType _t);
 	void validateNDVI(AfterPartyType _t);
+	void validateImg(AfterPartyType _t);
 
 	QString getDownloadLink_LS8(int _bandIndex);
 	QString getDownloadLink_S2(int _bandIndex);

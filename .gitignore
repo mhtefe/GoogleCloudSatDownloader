@@ -19,6 +19,9 @@
 *.enc
 *.csv
 *.gz
+*.tif
+*.TIF
+*.jp2
 
 #folders
 .vs

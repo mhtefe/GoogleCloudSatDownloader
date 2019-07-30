@@ -836,7 +836,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 		}
 
 		AfterPartyType t;
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 21; i++)
 			t.paths[i] = getImageFolderPath_LS8(i, false);
 		t.m_dataSource = GCP_LANDSAT8;
 		t.FullPackageWasChecked = ui->checkBox_FullPackage_LS8->isChecked();
@@ -844,13 +844,14 @@ void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 		t.NDVIWasChecked = ui->checkBox_Ndvi_LS8->isChecked();
 		t.RGBWasChecked = ui->checkBox_Rgb_LS8->isChecked();
 		t.RGBNirWasChecked = ui->checkBox_RgbNir_LS8->isChecked();
+		t.ImgWasChecked = ui->checkBox_Img_LS8->isChecked();
 
 		m_afterPartyList.enqueue(t);
 	}
 	else
 	{
 		AfterPartyType t;
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 21; i++)
 			t.paths[i] = getImageFolderPath_LS8(i, false);
 		t.m_dataSource = GCP_LANDSAT8;
 		t.FullPackageWasChecked = ui->checkBox_FullPackage_LS8->isChecked();
@@ -858,6 +859,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 		t.NDVIWasChecked = ui->checkBox_Ndvi_LS8->isChecked();
 		t.RGBWasChecked = ui->checkBox_Rgb_LS8->isChecked();
 		t.RGBNirWasChecked = ui->checkBox_RgbNir_LS8->isChecked();
+		t.ImgWasChecked = ui->checkBox_Img_LS8->isChecked();
 
 		m_afterPartyList.enqueue(t);
 
@@ -954,7 +956,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_S2_clicked()
 }
 
 ////////////////////////////////////////////////////////////////////////// ls8 url & dir
-// Band index --> 15 = Thumbnail, 16 = FullPackage, 17 = RGB, 18 = RGBNir
+// Band index --> 15 = Thumbnail, 16 = FullPackage, 17 = RGB, 18 = RGBNir, 19 = NDVI, 20 = IMG
 QString GCSatDownloader::getImageFolderPath_LS8(int _bandIndex, bool create)
 {
 	GCP_LANDSAT8_LABEL scn = m_LS8_Searcher->m_vlb[m_datas_Index_LS8];
@@ -987,7 +989,7 @@ QString GCSatDownloader::getImageFolderPath_LS8(int _bandIndex, bool create)
 		return imagePath;
 	}
 
-	if (_bandIndex != 15 && _bandIndex != 16 && _bandIndex != 17 && _bandIndex != 18 && _bandIndex != 0 && _bandIndex != 19) {
+	if (_bandIndex != 15 && _bandIndex != 16 && _bandIndex != 17 && _bandIndex != 18 && _bandIndex != 0 && _bandIndex != 19 && _bandIndex != 20) {
 		imagePath = imagePath.append(QString("\\")).append(scn.LS8_PRODUCT_ID).append("_").append(getBandString_LS8(_bandIndex));
 		if (_bandIndex == 13 || _bandIndex == 14)
 			imagePath.append(".txt");
@@ -1010,6 +1012,9 @@ QString GCSatDownloader::getImageFolderPath_LS8(int _bandIndex, bool create)
 
 		else if (_bandIndex == 19)
 			imagePath = imagePath.append(QString("\\")).append("NDVI").append(".tif");
+		
+		else if (_bandIndex == 20)
+			imagePath = imagePath.append(QString("\\")).append("pan").append(".img");
 	}
 	return imagePath;
 
@@ -1372,10 +1377,31 @@ void GCSatDownloader::checkBoxSaves()
 		validateRGB(t);
 		validateRGBNIR(t);
 		validateNDVI(t);
+		validateImg(t);
 
 		if (m_afterPartyList.size() == 0)
 			break;
 	}
+}
+
+void GCSatDownloader::validateImg(AfterPartyType _t)
+{
+	if (!_t.ImgWasChecked) return;
+
+	QString flink = _t.paths[8]; // get pan band path 
+	if (!QFileInfo().exists(flink))
+	{
+		return;
+	}
+
+	mu::RasterManager rast;
+	gik::GikStatus stat = rast.imread(flink.toLocal8Bit().constData());
+	if (stat == gik::GikStatus::gikSts_NoError)
+	{
+		flink = _t.paths[20]; // img path
+		rast.imsave(flink.toLocal8Bit().constData(), GIK_RASTER_FORMAT_ERDAS);
+	}
+
 }
 
 void GCSatDownloader::validateThumbnail(AfterPartyType _t)
