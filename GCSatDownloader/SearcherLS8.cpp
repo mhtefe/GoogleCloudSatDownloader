@@ -153,6 +153,11 @@ void SearcherLS8::DoWork()
 	emit searchFinished();
 }
 
+bool SearcherLS8::compareLS8LabelByDate(GCP_LANDSAT8_LABEL i1, GCP_LANDSAT8_LABEL i2)
+{
+	return (i1.LS8_DATE_ACQUIRED > i2.LS8_DATE_ACQUIRED);
+}
+
 
 void SearcherLS8::DoTerminate(void)
 {

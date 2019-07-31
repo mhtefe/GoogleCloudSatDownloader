@@ -30,7 +30,7 @@
 typedef struct AfterPartyType
 {
 	bool ThumbnailWasChecked, FullPackageWasChecked, RGBWasChecked, RGBNirWasChecked, NDVIWasChecked, ImgWasChecked; 
-	QString paths[21];
+	QString predefinedPaths[21];
 	DataSource m_dataSource;
 };
 

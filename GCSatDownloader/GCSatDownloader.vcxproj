@@ -166,7 +166,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_SearcherBase.cpp" />
-    <ClCompile Include="GeneratedFiles\Release\moc_SearcherLS8.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_SearcherLS8.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_SearcherS2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SearcherS2.cpp" />

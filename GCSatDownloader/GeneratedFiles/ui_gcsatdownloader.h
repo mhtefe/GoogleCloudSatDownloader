@@ -85,6 +85,10 @@ public:
     QLabel *label_6_LS8;
     QLabel *Label_CloudCover_LS8;
     QLabel *label_7_LS8;
+    QLabel *Label_Path;
+    QLabel *Label_Row;
+    QLabel *label_8_LS8;
+    QLabel *label_9_LS8;
     QGroupBox *groupBox_Coordinates;
     QGridLayout *gridLayout_6;
     QGridLayout *gridLayout_5;
@@ -435,6 +439,26 @@ public:
 
         formLayout->setWidget(6, QFormLayout::FieldRole, label_7_LS8);
 
+        Label_Path = new QLabel(groupBox_Labels);
+        Label_Path->setObjectName(QStringLiteral("Label_Path"));
+
+        formLayout->setWidget(7, QFormLayout::LabelRole, Label_Path);
+
+        Label_Row = new QLabel(groupBox_Labels);
+        Label_Row->setObjectName(QStringLiteral("Label_Row"));
+
+        formLayout->setWidget(8, QFormLayout::LabelRole, Label_Row);
+
+        label_8_LS8 = new QLabel(groupBox_Labels);
+        label_8_LS8->setObjectName(QStringLiteral("label_8_LS8"));
+
+        formLayout->setWidget(7, QFormLayout::FieldRole, label_8_LS8);
+
+        label_9_LS8 = new QLabel(groupBox_Labels);
+        label_9_LS8->setObjectName(QStringLiteral("label_9_LS8"));
+
+        formLayout->setWidget(8, QFormLayout::FieldRole, label_9_LS8);
+
 
         horizontalLayout_4->addLayout(formLayout);
 
@@ -586,7 +610,7 @@ public:
         tableWidget_datas_LS8->setAlternatingRowColors(true);
         tableWidget_datas_LS8->setSelectionBehavior(QAbstractItemView::SelectRows);
         tableWidget_datas_LS8->setGridStyle(Qt::SolidLine);
-        tableWidget_datas_LS8->setSortingEnabled(true);
+        tableWidget_datas_LS8->setSortingEnabled(false);
         tableWidget_datas_LS8->setColumnCount(3);
         tableWidget_datas_LS8->horizontalHeader()->setCascadingSectionResizes(true);
         tableWidget_datas_LS8->horizontalHeader()->setStretchLastSection(true);
@@ -996,7 +1020,7 @@ public:
         tableWidget_datas_S2->setAlternatingRowColors(true);
         tableWidget_datas_S2->setSelectionBehavior(QAbstractItemView::SelectRows);
         tableWidget_datas_S2->setGridStyle(Qt::SolidLine);
-        tableWidget_datas_S2->setSortingEnabled(true);
+        tableWidget_datas_S2->setSortingEnabled(false);
         tableWidget_datas_S2->setColumnCount(3);
         tableWidget_datas_S2->horizontalHeader()->setCascadingSectionResizes(true);
         tableWidget_datas_S2->horizontalHeader()->setStretchLastSection(true);
@@ -1122,6 +1146,10 @@ public:
         label_6_LS8->setText(QString());
         Label_CloudCover_LS8->setText(QApplication::translate("GcSatDownloader", "Cloud:", Q_NULLPTR));
         label_7_LS8->setText(QString());
+        Label_Path->setText(QApplication::translate("GcSatDownloader", "Path", Q_NULLPTR));
+        Label_Row->setText(QApplication::translate("GcSatDownloader", "Row", Q_NULLPTR));
+        label_8_LS8->setText(QString());
+        label_9_LS8->setText(QString());
         groupBox_Coordinates->setTitle(QApplication::translate("GcSatDownloader", "Koordinatlar", Q_NULLPTR));
         Label_North_LS8->setText(QApplication::translate("GcSatDownloader", "North (Lat)", Q_NULLPTR));
         LineEdit_North_LS8->setText(QString());

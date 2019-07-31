@@ -50,6 +50,12 @@ GCSatDownloader::GCSatDownloader(QWidget *parent) :
 
 	//////////////////////////////////////////////////////////////////////////u
 
+	QHeaderView *header = qobject_cast<QTableView *>(ui->tableWidget_datas_LS8)->horizontalHeader();
+
+	connect(header, &QHeaderView::sectionClicked, [this](int logicalIndex) {
+		QString text = ui->tableWidget_datas_LS8->horizontalHeaderItem(logicalIndex)->text();
+		qDebug() << logicalIndex << text;
+	});
 }
 
 int computeOutput(int x, int r1, int s1, int r2, int s2)
@@ -519,6 +525,8 @@ void GCSatDownloader::listSearchResults_LS8()
 		return;
 	}
 
+	sort(m_LS8_Searcher->m_vlb.begin(), m_LS8_Searcher->m_vlb.end(), SearcherLS8::compareLS8LabelByDate);
+
 	int i;
 	for (i = 0; i < m_LS8_Searcher->m_vlb.size(); ++i)
 	{
@@ -599,6 +607,8 @@ void GCSatDownloader::updateInfoTags_LS8(int row)
 	ui->label_5_LS8->setText(scn.LS8_DATE_ACQUIRED.toString("dd.MM.yyyy"));
 	ui->label_6_LS8->setText(scn.LS8_SENSING_TIME.toString("hh:mm:ss"));
 	ui->label_7_LS8->setText( QString::number(scn.LS8_CLOUD_COVER));
+	ui->label_8_LS8->setText(scn.LS8_WRS_PATH);
+	ui->label_9_LS8->setText(scn.LS8_WRS_ROW);
 
 	ui->LineEdit_North_LS8->setText( QString::number( scn.LS8_NORTH_LAT) );
 	ui->LineEdit_South_LS8->setText( QString::number( scn.LS8_SOUTH_LAT) );
@@ -710,6 +720,8 @@ void GCSatDownloader::afterDownloadFinished(QString str)
 		decompress_one_file(m_LS8_scene_rawFile.toStdString().c_str(), m_LS8_scene_extractFile.toStdString().c_str());
 
 		this->statusBar()->showMessage(tr("Extraction done."));
+
+		ui->lineEdit_Index_LS8->setText(m_LS8_scene_extractFile);
 	}
 }
 
@@ -837,7 +849,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 
 		AfterPartyType t;
 		for (int i = 0; i < 21; i++)
-			t.paths[i] = getImageFolderPath_LS8(i, false);
+			t.predefinedPaths[i] = getImageFolderPath_LS8(i, false);
 		t.m_dataSource = GCP_LANDSAT8;
 		t.FullPackageWasChecked = ui->checkBox_FullPackage_LS8->isChecked();
 		t.ThumbnailWasChecked = ui->checkBox_Thumbnail_LS8->isChecked();
@@ -852,7 +864,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_LS8_clicked()
 	{
 		AfterPartyType t;
 		for (int i = 0; i < 21; i++)
-			t.paths[i] = getImageFolderPath_LS8(i, false);
+			t.predefinedPaths[i] = getImageFolderPath_LS8(i, false);
 		t.m_dataSource = GCP_LANDSAT8;
 		t.FullPackageWasChecked = ui->checkBox_FullPackage_LS8->isChecked();
 		t.ThumbnailWasChecked = ui->checkBox_Thumbnail_LS8->isChecked();
@@ -909,7 +921,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_S2_clicked()
 
 		AfterPartyType t;
 		for (int i = 0; i < 20; i++)
-			t.paths[i] = getImageFolderPath_S2(i, false);
+			t.predefinedPaths[i] = getImageFolderPath_S2(i, false);
 		t.m_dataSource = GCP_SENTINEL2;
 		t.FullPackageWasChecked = ui->checkBox_FullPackage_S2->isChecked();
 		t.ThumbnailWasChecked = ui->checkBox_Thumbnail_S2->isChecked();
@@ -924,7 +936,7 @@ void GCSatDownloader::on_pushButton_DownloadImage_S2_clicked()
 
 		AfterPartyType t;
 		for (int i = 0; i < 20; i++)
-			t.paths[i] = getImageFolderPath_S2(i, false);
+			t.predefinedPaths[i] = getImageFolderPath_S2(i, false);
 		t.m_dataSource = GCP_SENTINEL2;
 		t.FullPackageWasChecked = ui->checkBox_FullPackage_S2->isChecked();
 		t.ThumbnailWasChecked = ui->checkBox_Thumbnail_S2->isChecked();
@@ -1279,7 +1291,7 @@ void GCSatDownloader::dropEvent(QDropEvent *event)
 			data = (GDALDataset*)GDALOpen(path, GA_ReadOnly);
 			double transform[6];
 			data->GetGeoTransform(transform);
-			int cx = 0, cy = 0;
+			float cx = 0, cy = 0;
 			colN = data->GetRasterBand(1)->GetXSize();
 			rowN = data->GetRasterBand(1)->GetYSize();
 
@@ -1388,18 +1400,26 @@ void GCSatDownloader::validateImg(AfterPartyType _t)
 {
 	if (!_t.ImgWasChecked) return;
 
-	QString flink = _t.paths[8]; // get pan band path 
+	QString flink = _t.predefinedPaths[8]; // get pan band path 
 	if (!QFileInfo().exists(flink))
 	{
 		return;
 	}
 
+	QFileInfo fileInfo(flink);
+	QString filename(fileInfo.fileName());
+
 	mu::RasterManager rast;
 	gik::GikStatus stat = rast.imread(flink.toLocal8Bit().constData());
 	if (stat == gik::GikStatus::gikSts_NoError)
 	{
-		flink = _t.paths[20]; // img path
-		rast.imsave(flink.toLocal8Bit().constData(), GIK_RASTER_FORMAT_ERDAS);
+		flink = _t.predefinedPaths[20]; // img path
+		flink.replace(QString("pan"), filename);
+		mu::GikStatus st = rast.imsave(flink.toLocal8Bit().constData(), GIK_RASTER_FORMAT_ERDAS);
+		if (st == mu::GikStatus::gikSts_NoError)
+		{
+			cout << flink.toStdString() << " reference img has been created." << endl;
+		}
 	}
 
 }
@@ -1419,29 +1439,29 @@ void GCSatDownloader::validateThumbnail(AfterPartyType _t)
 
 	for (int i = 2; i < 5; i++)
 	{
-		flink = _t.paths[i];
+		flink = _t.predefinedPaths[i];
 		if (!QFileInfo().exists(flink))
 		{
 			return;
 		}
 	}
 
-	flink = _t.paths[15];
+	flink = _t.predefinedPaths[15];
 	if (QFileInfo().exists(flink)) {
 		//ui->lineEdit_Info_LS8->setStyleSheet("background-color: yellow");
 		//ui->lineEdit_Info_LS8->setText(tr("Thumbnail already exist."));
 		return;
 	}
 
-	flink = _t.paths[4];
+	flink = _t.predefinedPaths[4];
 	stringPath = flink.toLocal8Bit().constData();
 	red.imread(stringPath);
 
-	flink = _t.paths[3];
+	flink = _t.predefinedPaths[3];
 	stringPath = flink.toLocal8Bit().constData();
 	green.imread(stringPath);
 
-	flink = _t.paths[2];
+	flink = _t.predefinedPaths[2];
 	stringPath = flink.toLocal8Bit().constData();
 	blue.imread(stringPath);
 
@@ -1470,7 +1490,7 @@ void GCSatDownloader::validateThumbnail(AfterPartyType _t)
 	cv::Mat * matPtr = rgb.getCvMat();
 	rgbMat.copyTo(*matPtr);
 
-	flink = _t.paths[15];
+	flink = _t.predefinedPaths[15];
 	stringPath = flink.toLocal8Bit().constData();
 	imwrite(stringPath, *rgb.getCvMat());
 }
@@ -1486,13 +1506,13 @@ void GCSatDownloader::validateFullPackage(AfterPartyType _t){
 	QString flink;
 
 	for (int i = 1; i < 12; i++) {
-		flink = _t.paths[i];
+		flink = _t.predefinedPaths[i];
 		if (!QFileInfo().exists(flink)) {
 			return;
 		}
 	}
 
-	flink = _t.paths[16];
+	flink = _t.predefinedPaths[16];
 	if (QFileInfo().exists(flink)) {
 		//ui->lineEdit_Info_LS8->setStyleSheet("background-color: yellow");
 		//ui->lineEdit_Info_LS8->setText(tr("FullPackage already exist."));
@@ -1501,7 +1521,7 @@ void GCSatDownloader::validateFullPackage(AfterPartyType _t){
 
 	for (int i = 1; i < 12; i++) {
 
-		flink = _t.paths[i];
+		flink = _t.predefinedPaths[i];
 		stringPath = flink.toLocal8Bit().constData();
 		bands[i - 1].imread(stringPath);
 	}
@@ -1529,7 +1549,7 @@ void GCSatDownloader::validateFullPackage(AfterPartyType _t){
 	cv::Mat * matPtr = fullPackage.getCvMat();
 	fullPackageMat.copyTo(*matPtr);
 
-	flink = _t.paths[16];
+	flink = _t.predefinedPaths[16];
 	stringPath = flink.toLocal8Bit().constData();
 	fullPackage.imsave(stringPath);
 	//cv::imwrite(stringPath, *fullPackage.getCvMat());
@@ -1546,28 +1566,28 @@ void GCSatDownloader::validateRGB(AfterPartyType _t){
 	string stringPath;
 
 	for (int i = 2; i < 5; i++) {
-		flink = _t.paths[i];
+		flink = _t.predefinedPaths[i];
 		if (!QFileInfo().exists(flink)) {
 			return;
 		}
 	}
 
-	flink = _t.paths[17];
+	flink = _t.predefinedPaths[17];
 	if (QFileInfo().exists(flink)) {
 		//ui->lineEdit_Info_LS8->setStyleSheet("background-color: yellow");
 		//ui->lineEdit_Info_LS8->setText(tr("RGB already exist."));
 		return;
 	}
 
-	flink = _t.paths[4];
+	flink = _t.predefinedPaths[4];
 	stringPath = flink.toLocal8Bit().constData();
 	red.imread(stringPath);
 
-	flink = _t.paths[2];
+	flink = _t.predefinedPaths[2];
 	stringPath = flink.toLocal8Bit().constData();
 	blue.imread(stringPath);
 
-	flink = _t.paths[3];
+	flink = _t.predefinedPaths[3];
 	stringPath = flink.toLocal8Bit().constData();
 	green.imread(stringPath);
 
@@ -1580,7 +1600,7 @@ void GCSatDownloader::validateRGB(AfterPartyType _t){
 	cv::Mat * matPtr = rgb.getCvMat();
 	rgbMat.copyTo(*matPtr);
 
-	flink = _t.paths[17]; //RGB
+	flink = _t.predefinedPaths[17]; //RGB
 	stringPath = flink.toLocal8Bit().constData();
 	rgb.imsave(stringPath);
 }
@@ -1599,14 +1619,14 @@ void GCSatDownloader::validateRGBNIR(AfterPartyType _t){
 
 		
 		for (int i = 2; i < 6; i++) {
-			flink = _t.paths[i];
+			flink = _t.predefinedPaths[i];
 			//flink = getImageFolderPath_LS8(i);
 			if (!QFileInfo().exists(flink)) {
 				return;
 			}
 		}
 
-		flink = _t.paths[18];
+		flink = _t.predefinedPaths[18];
 		//flink = getImageFolderPath_LS8(18);
 		if (QFileInfo().exists(flink)) {
 			//ui->lineEdit_Info_LS8->setStyleSheet("background-color: yellow");
@@ -1619,20 +1639,20 @@ void GCSatDownloader::validateRGBNIR(AfterPartyType _t){
 
 
 		for (int i = 2; i < 5; i++) {
-			flink = _t.paths[i];
+			flink = _t.predefinedPaths[i];
 			//flink = getImageFolderPath_S2(i);
 			if (!QFileInfo().exists(flink)) {
 				return;
 			}
 		}
 
-		flink = _t.paths[8];
+		flink = _t.predefinedPaths[8];
 		//flink = getImageFolderPath_S2(8);
 		if (!QFileInfo().exists(flink)) {
 			return;
 		}
 
-		flink = _t.paths[18];
+		flink = _t.predefinedPaths[18];
 		//flink = getImageFolderPath_S2(18);
 		if (QFileInfo().exists(flink)) {
 			//ui->lineEdit_Info_LS8->setStyleSheet("background-color: yellow");
@@ -1641,22 +1661,22 @@ void GCSatDownloader::validateRGBNIR(AfterPartyType _t){
 		}
 	}
 
-	flink = _t.paths[4];
+	flink = _t.predefinedPaths[4];
 	stringPath = flink.toLocal8Bit().constData();
 	red.imread(stringPath);
 
-	flink = _t.paths[2];
+	flink = _t.predefinedPaths[2];
 	stringPath = flink.toLocal8Bit().constData();
 	blue.imread(stringPath);
 
-	flink = _t.paths[3];
+	flink = _t.predefinedPaths[3];
 	stringPath = flink.toLocal8Bit().constData();
 	green.imread(stringPath);
 
 	if(_t.m_dataSource == GCP_LANDSAT8)
-		flink = _t.paths[5];
+		flink = _t.predefinedPaths[5];
 	else
-		flink = _t.paths[8];
+		flink = _t.predefinedPaths[8];
 	stringPath = flink.toLocal8Bit().constData();
 	nir.imread(stringPath);
 
@@ -1670,7 +1690,7 @@ void GCSatDownloader::validateRGBNIR(AfterPartyType _t){
 	cv::Mat * matPtr = rgb.getCvMat();
 	rgbNirMat.copyTo(*matPtr);
 
-	flink = _t.paths[18];
+	flink = _t.predefinedPaths[18];
 	stringPath = flink.toLocal8Bit().constData();
 	rgb.imsave(stringPath);
 }
@@ -1685,13 +1705,13 @@ void GCSatDownloader::validateNDVI(AfterPartyType _t){
 	cv::Mat redNirMat;
 
 	for (int i = 4; i < 6; i++) {
-		flink = _t.paths[i];
+		flink = _t.predefinedPaths[i];
 		if (!QFileInfo().exists(flink)) {
 			return;
 		}
 	}
 
-	flink = _t.paths[19];
+	flink = _t.predefinedPaths[19];
 	//flink = getImageFolderPath_LS8(19);
 	if (QFileInfo().exists(flink)) {
 		//ui->lineEdit_Info_LS8->setStyleSheet("background-color: yellow");
@@ -1699,11 +1719,11 @@ void GCSatDownloader::validateNDVI(AfterPartyType _t){
 		return;
 	}
 
-	flink = _t.paths[4];
+	flink = _t.predefinedPaths[4];
 	stringPath = flink.toLocal8Bit().constData();
 	red.imread(stringPath);
 
-	flink = _t.paths[5];
+	flink = _t.predefinedPaths[5];
 	stringPath = flink.toLocal8Bit().constData();
 	nir.imread(stringPath);
 
@@ -1736,7 +1756,7 @@ void GCSatDownloader::validateNDVI(AfterPartyType _t){
 	cv::Mat * matPtr = redNir.getCvMat();
 	redNirMat.copyTo(*matPtr);
 
-	flink = _t.paths[19]; //RGBNIR
+	flink = _t.predefinedPaths[19]; //RGBNIR
 	stringPath = flink.toLocal8Bit().constData();
 	redNir.imsave(stringPath);
 }

@@ -22,6 +22,8 @@
 *.tif
 *.TIF
 *.jp2
+*.xml
+*.aux
 
 #folders
 .vs

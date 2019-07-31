@@ -14,6 +14,7 @@ public:
 
 	std::vector<GCP_LANDSAT8_LABEL> m_vlb;
 
+	static bool compareLS8LabelByDate(GCP_LANDSAT8_LABEL i1, GCP_LANDSAT8_LABEL i2);
 signals:
 	void searchStarted();
 	void searchFinished();
